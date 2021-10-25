@@ -16,7 +16,10 @@ const config: webpack.Configuration = {
         filename: '[name].[contenthash].js',
     },
     plugins: [
-        new HtmlWebpackPlugin(),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/index.html'
+        }),
         new ModuleLogger(),
         new StatoscopePlugin({
             saveStatsTo: 'stats.json',
@@ -29,8 +32,16 @@ const config: webpack.Configuration = {
             "buffer": require.resolve("buffer"),
             "stream": false,
         },
+        extensions: ['.tsx', '.ts', '.js'],
     },
     module: {
+        rules: [
+            {
+                test: /\.(ts|tsx|js|jsx)$/,
+                loader: 'ts-loader',
+                exclude: ['/node_modules/'],
+            }
+        ]
     },
 };
 
